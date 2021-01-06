@@ -20,6 +20,7 @@ class _MyAppState extends State<MyApp> {
     viewportFraction: 0.1,
     initialPage: 5,
   );
+  int imageIndex = 1;
   int _beadCounter = 0;
   int _numberOfCountsToCompleteRound = 33;
   int _roundCounter = 0;
@@ -40,22 +41,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Tasbih',
+
       // debugShowCheckedModeBanner: false,
       home: Scaffold(
-        drawer: SafeArea(
-            child: Container(
-          // color: Colors.orangeAccent,
-          child: ListView(children: <Widget>[
-            ListTile(
-              tileColor: Colors.black45,
-              title: Text("Reset everything"),
-              trailing: Icon(Icons.refresh),
-              onTap: () {
-                _resetEveryThing();
-              },
-            ),
-          ]),
-        )),
         body: GestureDetector(
           onTap: () {
             _clicked();
@@ -70,20 +59,41 @@ class _MyAppState extends State<MyApp> {
               children: <Widget>[
                 Expanded(
                     flex: 2,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          textDirection: TextDirection.ltr,
-                          children: <Widget>[
-                            _Counter(
-                                counter: _roundCounter, counterName: 'Round'),
-                            _Counter(
-                                counter: _beadCounter, counterName: 'Beads'),
-                          ],
-                        ),
-                      ],
+                    child: SafeArea(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            children: [
+                              IconButton(
+                                  icon: Icon(Icons.palette),
+                                  onPressed: () {
+                                    setState(() {
+                                      imageIndex < 5
+                                          ? imageIndex++
+                                          : imageIndex = 1;
+                                    });
+                                  }),
+                              IconButton(
+                                  icon: Icon(Icons.refresh),
+                                  onPressed: () {
+                                    confirmReset(context);
+                                  }),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            textDirection: TextDirection.ltr,
+                            children: <Widget>[
+                              _Counter(
+                                  counter: _roundCounter, counterName: 'Round'),
+                              _Counter(
+                                  counter: _beadCounter, counterName: 'Beads'),
+                            ],
+                          ),
+                          SizedBox(),
+                        ],
+                      ),
                     )),
                 Expanded(
                   flex: 1,
@@ -96,7 +106,7 @@ class _MyAppState extends State<MyApp> {
                       itemBuilder: (context, position) {
                         return Container(
                           child: Image.asset(
-                            'assets/bead-1.png',
+                            'assets/bead-$imageIndex.png',
                           ),
                         );
                       },
@@ -184,4 +194,18 @@ class _Counter extends StatelessWidget {
       ],
     );
   }
+}
+
+void confirmReset(BuildContext context) {
+  //TODO: Selesaikan ni
+  var alert = AlertDialog(
+    title: Text("Reset"),
+    content: Text("This action can't be undone"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      });
 }
