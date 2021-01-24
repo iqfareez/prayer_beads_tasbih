@@ -1,16 +1,13 @@
-# prayer_beads
+# Prayer beads Flutter (Tasbih | Zikr)
 
-A clone or copy from 
+A clone from [**pinkeshdarji/PrayerBeads**](https://github.com/pinkeshdarji/PrayerBeads)
 
-## Getting Started
+<!-- ## App UI
 
-This project is a starting point for a Flutter application.
+| GIF                                                                                                                                        | Screenshot                                                                                                                                 |
+| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| <img src="https://user-images.githubusercontent.com/60868965/94334737-4f988280-000a-11eb-92e8-161c9655be9b.gif" heigth="512" width="288"/> | <img src="https://user-images.githubusercontent.com/60868965/94332657-8fab3580-0009-11eb-852d-269a9838c1ba.jpg" heigth="512" width="288"/> | -->
 
-A few resources to get you started if this is your first Flutter project:
+## LICENSE
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+License came from the original repo. View license on `LICENSE`
