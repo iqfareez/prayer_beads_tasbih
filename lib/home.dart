@@ -199,19 +199,11 @@ void confirmReset(BuildContext context, VoidCallback callback) {
       TextButton(
         onPressed: () {
           callback();
+          showSnackBar(
+              context: context,
+              label: 'Cleared',
+              icon: CupertinoIcons.check_mark_circled);
           Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              behavior: SnackBarBehavior.floating,
-              content: Row(
-                children: [
-                  Icon(
-                    CupertinoIcons.check_mark_circled,
-                    color: Colors.white60,
-                  ),
-                  SizedBox(width: 5),
-                  Text('Cleared')
-                ],
-              )));
         },
         child: Text('Confirm'),
       ),
@@ -223,4 +215,19 @@ void confirmReset(BuildContext context, VoidCallback callback) {
       builder: (BuildContext context) {
         return alert;
       });
+}
+
+void showSnackBar({BuildContext context, String label, IconData icon}) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      behavior: SnackBarBehavior.floating,
+      content: Row(
+        children: [
+          Icon(
+            icon,
+            color: Colors.white60,
+          ),
+          SizedBox(width: 5),
+          Text(label)
+        ],
+      )));
 }
