@@ -30,6 +30,8 @@ dependencies:
   get_storage: ^1.4.0
   vibration: ^1.7.3
   animated_drawer: ^0.0.4
+  url_launcher: ^5.7.10
+  share: ^0.6.5+4
 
 dev_dependencies:
   flutter_test:
