@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:vibration/vibration.dart';
-import 'AnimatedFlipCounter.dart';
+import 'utils/AnimatedFlipCounter.dart';
 import 'CONSTANTS.dart';
 
 class Home extends StatefulWidget {

@@ -16,17 +16,20 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Tasbeeh',
       themeMode: ThemeMode.system,
-      // debugShowCheckedModeBanner: false,
       home: AnimatedDrawer(
         homePageXValue: 60,
         shadowXValue: 10,
-        homePageContent: Home(),
-        backgroundGradient: LinearGradient(colors: [
-          Color(0xFF134E5E),
-          Color(0xFF71B280),
-        ], begin: Alignment.topLeft, end: Alignment.bottomRight),
-        menuPageContent: Menu(),
+        backgroundGradient: LinearGradient(
+          colors: [
+            Color(0xFF134E5E),
+            Color(0xFF71B280),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         shadowColor: Colors.teal,
+        homePageContent: Home(),
+        menuPageContent: Menu(),
       ),
     );
   }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Menu extends StatelessWidget {
+  var menuButtonTextStyle = TextStyle(color: Colors.white);
+
   @override
   Widget build(BuildContext context) {
-    var menuButtonTextStyle = TextStyle(color: Colors.white);
     return Container(
       padding: const EdgeInsets.all(8.0),
       // color: Colors.white,
@@ -11,36 +14,31 @@ class Menu extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextButton.icon(
-              onPressed: () {},
-              icon: Icon(
-                Icons.code,
-                color: Colors.white,
-              ),
-              label: Text(
-                'GitHub',
-                style: menuButtonTextStyle,
-              )),
+          buildMenuButton(
+              name: 'GitHub',
+              icon: Icons.code,
+              action: () {
+                _launchURL('https://github.com/iqfareez/prayer_beads_tasbih');
+              }),
           Divider(
             color: Colors.white54,
           ),
-          TextButton.icon(
-            icon: Icon(
-              Icons.share,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-            label: Text(
-              'Share this app',
-              style: menuButtonTextStyle,
-            ),
-          ),
+          buildMenuButton(
+              name: 'Share this app',
+              icon: Icons.share,
+              action: () {
+                Share.share(
+                    'I use Tasbeeh app in my daily life. Download it now on Google Play Store: bit.ly/3aEgsQS');
+              }),
           TextButton.icon(
             icon: Icon(
               Icons.rate_review,
               color: Colors.white,
             ),
-            onPressed: () {},
+            onPressed: () {
+              _launchURL(
+                  'https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads');
+            },
             label: Text(
               'Rate this app',
               style: menuButtonTextStyle,
@@ -49,5 +47,30 @@ class Menu extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  TextButton buildMenuButton(
+      {@required String name,
+      @required IconData icon,
+      @required Function action}) {
+    return TextButton.icon(
+      onPressed: action,
+      icon: Icon(
+        icon,
+        color: Colors.white,
+      ),
+      label: Text(
+        name,
+        style: menuButtonTextStyle,
+      ),
+    );
+  }
+}
+
+void _launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
