@@ -55,6 +55,7 @@ class _HomeState extends State<Home> {
                       children: <Widget>[
                         Row(
                           children: [
+                            SizedBox(width: 45),
                             IconButton(
                                 icon: Icon(Icons.palette),
                                 onPressed: () {

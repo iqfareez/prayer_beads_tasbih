@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.1
   get_storage: ^1.4.0
   vibration: ^1.7.3
+  animated_drawer: ^0.0.4
 
 dev_dependencies:
   flutter_test:
