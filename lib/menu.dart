@@ -3,7 +3,7 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Menu extends StatelessWidget {
-  var menuButtonTextStyle = TextStyle(color: Colors.white);
+  final menuButtonTextStyle = TextStyle(color: Colors.white);
 
   @override
   Widget build(BuildContext context) {

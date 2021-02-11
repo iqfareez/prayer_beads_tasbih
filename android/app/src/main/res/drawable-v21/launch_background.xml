@@ -3,7 +3,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="?android:colorBackground" />
 
-    <item android:drawable="#71B280" />
+    <item android:drawable="@color/background_colour" />
 
     <item>
         <bitmap
