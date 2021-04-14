@@ -10,7 +10,9 @@ A clone from [**pinkeshdarji/PrayerBeads**](https://github.com/pinkeshdarji/Pray
 
 ## [RELEASES](https://github.com/iqfareez/prayer_beads_tasbih/releases)
 
-Available on Android only
+1. For [Android](https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads)
+
+2. [Web app](https://online-tasbeeh.web.app)
 
 ## LICENSE
 

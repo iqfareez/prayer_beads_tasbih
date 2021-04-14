@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:vibration/vibration.dart';
-
 import 'CONSTANTS.dart';
 import 'utils/AnimatedFlipCounter.dart';
 
@@ -188,35 +188,54 @@ class _Counter extends StatelessWidget {
 }
 
 void confirmReset(BuildContext context, VoidCallback callback) {
-  var alert = AlertDialog(
-    title: Text("Reset"),
-    content: Text("This action can't be undone"),
-    actions: [
-      TextButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        child: Text('Cancel'),
-      ),
-      TextButton(
-        onPressed: () {
-          callback();
-          showSnackBar(
-              context: context,
-              label: 'Cleared',
-              icon: CupertinoIcons.check_mark_circled);
-          Navigator.of(context).pop();
-        },
-        child: Text('Confirm'),
-      ),
-    ],
-  );
+  const _confirmText = Text('Confirm', style: TextStyle(color: Colors.red));
+  const _cancelText = Text('Cancel');
+  const _dialogTitle = Text("Reset Counter?");
+  const _dialogContent = Text("This action can't be undone");
+  final _confirmAction = () {
+    callback();
+    showSnackBar(
+        context: context,
+        label: 'Cleared',
+        icon: CupertinoIcons.check_mark_circled);
+    Navigator.of(context).pop();
+  };
+  Widget alert = kIsWeb
+      ? AlertDialog(
+          title: _dialogTitle,
+          content: _dialogContent,
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: _cancelText,
+            ),
+            TextButton(
+              onPressed: _confirmAction,
+              child: _confirmText,
+            ),
+          ],
+        )
+      : CupertinoAlertDialog(
+          title: _dialogTitle,
+          content: _dialogContent,
+          actions: [
+            CupertinoDialogAction(
+              child: _cancelText,
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoDialogAction(
+              child: _confirmText,
+              onPressed: _confirmAction,
+            ),
+          ],
+        );
 
   showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      });
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
 }
 
 void showSnackBar({BuildContext context, String label, IconData icon}) {

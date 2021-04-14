@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,9 +21,22 @@ class Menu extends StatelessWidget {
               action: () {
                 _launchURL('https://github.com/iqfareez/prayer_beads_tasbih');
               }),
-          Divider(
-            color: Colors.white54,
-          ),
+          Divider(color: Colors.white54),
+          kIsWeb
+              ? buildMenuButton(
+                  name: 'Try the web app',
+                  icon: Icons.web,
+                  action: () {
+                    _launchURL('https://online-tasbeeh.web.app');
+                  })
+              : buildMenuButton(
+                  name: 'Get an app',
+                  icon: Icons.android,
+                  action: () {
+                    _launchURL(
+                        'https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads');
+                  }),
+          Divider(color: Colors.white54),
           buildMenuButton(
               name: 'Share this app',
               icon: Icons.share,
@@ -31,20 +45,22 @@ class Menu extends StatelessWidget {
                     'I use Tasbeeh app in my daily life. Download it now on Google Play Store: bit.ly/3aEgsQS',
                     subject: 'Sharing Tasbeeh app');
               }),
-          TextButton.icon(
-            icon: Icon(
-              Icons.rate_review,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              _launchURL(
-                  'https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads');
-            },
-            label: Text(
-              'Rate this app',
-              style: menuButtonTextStyle,
-            ),
-          ),
+          !kIsWeb
+              ? TextButton.icon(
+                  icon: Icon(
+                    Icons.rate_review,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    _launchURL(
+                        'https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads');
+                  },
+                  label: Text(
+                    'Rate this app',
+                    style: menuButtonTextStyle,
+                  ),
+                )
+              : SizedBox.shrink(),
         ],
       ),
     );
