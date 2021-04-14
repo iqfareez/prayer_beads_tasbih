@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Menu extends StatelessWidget {
@@ -28,7 +28,8 @@ class Menu extends StatelessWidget {
               icon: Icons.share,
               action: () {
                 Share.share(
-                    'I use Tasbeeh app in my daily life. Download it now on Google Play Store: bit.ly/3aEgsQS');
+                    'I use Tasbeeh app in my daily life. Download it now on Google Play Store: bit.ly/3aEgsQS',
+                    subject: 'Sharing Tasbeeh app');
               }),
           TextButton.icon(
             icon: Icon(
