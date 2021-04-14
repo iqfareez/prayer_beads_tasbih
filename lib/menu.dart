@@ -10,7 +10,6 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      // color: Colors.white,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,15 +21,15 @@ class Menu extends StatelessWidget {
                 _launchURL('https://github.com/iqfareez/prayer_beads_tasbih');
               }),
           Divider(color: Colors.white54),
-          kIsWeb
+          !kIsWeb
               ? buildMenuButton(
                   name: 'Try the web app',
-                  icon: Icons.web,
+                  icon: Icons.web_asset,
                   action: () {
-                    _launchURL('https://online-tasbeeh.web.app');
+                    _launchURL('https://online-tasbeeh.web.app/');
                   })
               : buildMenuButton(
-                  name: 'Get an app',
+                  name: 'Get the app',
                   icon: Icons.android,
                   action: () {
                     _launchURL(
@@ -42,7 +41,7 @@ class Menu extends StatelessWidget {
               icon: Icons.share,
               action: () {
                 Share.share(
-                    'I use Tasbeeh app in my daily life. Download it now on Google Play Store: bit.ly/3aEgsQS',
+                    'I use Tasbeeh app in my daily life. Download it now on Google Play Store: http://bit.ly/3aEgsQS or access it on the web https://online-tasbeeh.web.app/',
                     subject: 'Sharing Tasbeeh app');
               }),
           !kIsWeb

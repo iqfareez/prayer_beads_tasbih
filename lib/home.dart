@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vibration/vibration.dart';
 import 'CONSTANTS.dart';
 import 'utils/AnimatedFlipCounter.dart';
@@ -20,6 +21,7 @@ class _HomeState extends State<Home> {
   int _beadCounter = 0;
   int _numberOfCountsToCompleteRound = 33;
   int _roundCounter = 0;
+  int _accumulatedCounter = 0;
   bool _canVibrate = true;
   bool _isDisposed = false;
   @override
@@ -46,7 +48,7 @@ class _HomeState extends State<Home> {
         },
         child: Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               Expanded(
                   flex: 2,
@@ -58,6 +60,7 @@ class _HomeState extends State<Home> {
                           children: [
                             SizedBox(width: 45),
                             IconButton(
+                                tooltip: 'Change colour',
                                 icon: Icon(Icons.palette),
                                 onPressed: () {
                                   setState(() {
@@ -67,12 +70,22 @@ class _HomeState extends State<Home> {
                                   });
                                 }),
                             IconButton(
+                                tooltip: 'Reset counter',
                                 icon: Icon(Icons.refresh),
                                 onPressed: () {
                                   confirmReset(context, _resetEverything);
                                 }),
+                            IconButton(
+                                tooltip: 'Share my accumulated value',
+                                icon: Icon(Icons.share),
+                                onPressed: () {
+                                  Share.share(
+                                      'My total tasbeeh counter is $_accumulatedCounter',
+                                      subject: 'Total accumulated Counter');
+                                }),
                           ],
                         ),
+                        Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           textDirection: TextDirection.ltr,
@@ -83,7 +96,22 @@ class _HomeState extends State<Home> {
                                 counter: _beadCounter, counterName: 'Beads'),
                           ],
                         ),
-                        SizedBox(),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 32),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text('Accumulated'),
+                              SizedBox(width: 10),
+                              AnimatedFlipCounter(
+                                  value: _accumulatedCounter,
+                                  duration: Duration(milliseconds: 730),
+                                  size: 14),
+                            ],
+                          ),
+                        ),
+                        Spacer()
                       ],
                     ),
                   )),
@@ -128,6 +156,8 @@ class _HomeState extends State<Home> {
       setState(() {
         _beadCounter = GetStorage().read(kBeadsCount) ?? 0;
         _roundCounter = GetStorage().read(kRoundCount) ?? 0;
+        _accumulatedCounter =
+            _roundCounter * _numberOfCountsToCompleteRound + _beadCounter;
       });
     }
   }
@@ -142,8 +172,9 @@ class _HomeState extends State<Home> {
     if (!_isDisposed) {
       setState(() {
         _beadCounter++;
+        _accumulatedCounter++;
         if (_beadCounter > _numberOfCountsToCompleteRound) {
-          _beadCounter = 0;
+          _beadCounter = 1;
           _roundCounter++;
           if (_canVibrate) Vibration.vibrate(duration: 100, amplitude: 100);
         }
