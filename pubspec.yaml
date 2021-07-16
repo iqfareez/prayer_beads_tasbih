@@ -3,7 +3,7 @@ description: A clone or copy from
 
 publish_to: "none"
 
-version: 1.1.6+3
+version: 1.2.0+4
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -30,4 +30,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/beads/
+    - assets/zikr/

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -17,13 +18,22 @@ class _HomeState extends State<Home> {
     viewportFraction: 0.1,
     initialPage: 5,
   );
-  int imageIndex = 1;
+  int _imageIndex = 1;
   int _beadCounter = 0;
   int _numberOfCountsToCompleteRound = 33;
   int _roundCounter = 0;
   int _accumulatedCounter = 0;
   bool _canVibrate = true;
   bool _isDisposed = false;
+  List<Color> _bgColour = [
+    Colors.teal.shade50,
+    Colors.lime.shade50,
+    Colors.lightBlue.shade50,
+    Colors.pink.shade50,
+    Colors.black12
+  ];
+  CarouselController _buttonCarouselController = CarouselController();
+
   @override
   void initState() {
     super.initState();
@@ -64,9 +74,9 @@ class _HomeState extends State<Home> {
                                 icon: Icon(Icons.palette),
                                 onPressed: () {
                                   setState(() {
-                                    imageIndex < 5
-                                        ? imageIndex++
-                                        : imageIndex = 1;
+                                    _imageIndex < 5
+                                        ? _imageIndex++
+                                        : _imageIndex = 1;
                                   });
                                 }),
                             IconButton(
@@ -111,6 +121,43 @@ class _HomeState extends State<Home> {
                             ],
                           ),
                         ),
+                        CarouselSlider(
+                          carouselController: _buttonCarouselController,
+                          options: CarouselOptions(
+                            height: 100.0,
+                            enlargeCenterPage: true,
+                          ),
+                          items: [1, 2, 3, 4].map((i) {
+                            return Builder(
+                              builder: (BuildContext context) {
+                                return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 5.0),
+                                    decoration: BoxDecoration(
+                                        color: _bgColour[_imageIndex - 1],
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: Image.asset('assets/zikr/$i.png'));
+                              },
+                            );
+                          }).toList(),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  _buttonCarouselController.previousPage();
+                                },
+                                icon: Icon(Icons.navigate_before)),
+                            IconButton(
+                                onPressed: () {
+                                  _buttonCarouselController.nextPage();
+                                },
+                                icon: Icon(Icons.navigate_next)),
+                          ],
+                        ),
                         Spacer()
                       ],
                     ),
@@ -126,7 +173,7 @@ class _HomeState extends State<Home> {
                     itemBuilder: (context, position) {
                       return Container(
                         child: Image.asset(
-                          'assets/bead-$imageIndex.png',
+                          'assets/beads/bead-$_imageIndex.png',
                         ),
                       );
                     },
@@ -270,7 +317,8 @@ void confirmReset(BuildContext context, VoidCallback callback) {
 }
 
 void showSnackBar({BuildContext context, String label, IconData icon}) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
       behavior: SnackBarBehavior.floating,
       content: Row(
         children: [
@@ -281,5 +329,7 @@ void showSnackBar({BuildContext context, String label, IconData icon}) {
           SizedBox(width: 5),
           Text(label)
         ],
-      )));
+      ),
+    ),
+  );
 }
