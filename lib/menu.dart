@@ -4,7 +4,8 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Menu extends StatelessWidget {
-  final menuButtonTextStyle = TextStyle(color: Colors.white);
+  const Menu({Key key}) : super(key: key);
+  final menuButtonTextStyle = const TextStyle(color: Colors.white);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class Menu extends StatelessWidget {
               action: () {
                 _launchURL('https://github.com/iqfareez/prayer_beads_tasbih');
               }),
-          Divider(color: Colors.white54),
+          const Divider(color: Colors.white54),
           !kIsWeb
               ? buildMenuButton(
                   name: 'Try the web app',
@@ -35,7 +36,7 @@ class Menu extends StatelessWidget {
                     _launchURL(
                         'https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads');
                   }),
-          Divider(color: Colors.white54),
+          const Divider(color: Colors.white54),
           buildMenuButton(
               name: 'Share this app',
               icon: Icons.share,
@@ -46,7 +47,7 @@ class Menu extends StatelessWidget {
               }),
           !kIsWeb
               ? TextButton.icon(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.rate_review,
                     color: Colors.white,
                   ),
@@ -59,7 +60,7 @@ class Menu extends StatelessWidget {
                     style: menuButtonTextStyle,
                   ),
                 )
-              : SizedBox.shrink(),
+              : const SizedBox.shrink(),
         ],
       ),
     );

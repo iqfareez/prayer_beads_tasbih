@@ -6,10 +6,12 @@ import 'home.dart';
 
 void main() async {
   await GetStorage.init();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: AnimatedDrawer(
         homePageXValue: 60,
         shadowXValue: 10,
-        backgroundGradient: LinearGradient(
+        backgroundGradient: const LinearGradient(
           colors: [
             Color(0xFF134E5E),
             Color(0xFF71B280),
@@ -27,8 +29,8 @@ class MyApp extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
         shadowColor: Colors.teal,
-        homePageContent: Home(),
-        menuPageContent: Menu(),
+        homePageContent: const Home(),
+        menuPageContent: const Menu(),
       ),
     );
   }
