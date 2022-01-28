@@ -1,3 +1,5 @@
+[![style: lint](https://img.shields.io/badge/style-flutter__lints-4BC0F5.svg)](https://pub.dev/packages/flutter_lints)
+
 # Prayer beads Flutter (Tasbih | Zikr)
 
 A clone from [**pinkeshdarji/PrayerBeads**](https://github.com/pinkeshdarji/PrayerBeads)
