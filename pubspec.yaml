@@ -17,7 +17,7 @@ dependencies:
   vibration: ^1.7.3
   animated_drawer: ^0.0.4
   url_launcher: ^6.0.3
-  share_plus: ^2.0.1
+  share_plus: ^3.0.4
   carousel_slider: ^4.0.0
 
 dev_dependencies:
