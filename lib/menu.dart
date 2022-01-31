@@ -19,12 +19,14 @@ class Menu extends StatelessWidget {
               name: 'GitHub',
               icon: Icons.code,
               action: () {
-                _launchURL('https://github.com/iqfareez/prayer_beads_tasbih');
+                _launchURL('http://github.com/iqfareez/prayer_beads_tasbih');
+                // i use http here to avoid error:
+                // component name for https://github.com/iqfareez/prayer_beads_tasbih is null
               }),
           const Divider(color: Colors.white54),
           !kIsWeb
               ? buildMenuButton(
-                  name: 'Try the web app',
+                  name: 'Try on web',
                   icon: Icons.web_asset,
                   action: () {
                     _launchURL('https://online-tasbeeh.web.app/');
