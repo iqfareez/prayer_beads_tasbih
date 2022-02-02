@@ -16,6 +16,11 @@ A clone from [**pinkeshdarji/PrayerBeads**](https://github.com/pinkeshdarji/Pray
 
 2. [Web app](https://online-tasbeeh.web.app)
 
+## SCREENSHOTS
+![flutter_01 (Custom)](https://user-images.githubusercontent.com/60868965/152160335-688ee06d-7547-4ee9-a209-ff4792a24701.png)
+![flutter_02 (Custom)](https://user-images.githubusercontent.com/60868965/152160343-5d11d5b1-66d0-42c7-b33d-d06929950bbf.png)
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/60868965/152160474-84a858c6-daeb-4d5d-9979-16988c3a65b3.gif)
+
 ## LICENSE
 
 License came from the original repo. View license on `LICENSE`
