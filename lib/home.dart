@@ -32,6 +32,7 @@ class _HomeState extends State<Home> {
     Colors.pink.shade50,
     Colors.black12
   ];
+
   final CarouselController _buttonCarouselController = CarouselController();
 
   @override
@@ -162,7 +163,7 @@ class _HomeState extends State<Home> {
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _controller,
                 scrollDirection: Axis.vertical,
-                itemBuilder: (context, position) {
+                itemBuilder: (_, __) {
                   return Image.asset(
                     'assets/beads/bead-$_imageIndex.png',
                   );
