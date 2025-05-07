@@ -1,13 +1,34 @@
 {
-  "hosting": {
-    "public": "build/web",
-    "site": "online-tasbeeh",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "mini-project-56b22",
+                    "appId": "1:605771036184:android:6e44945bde06293b85756d",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "mini-project-56b22",
+                    "configurations": {
+                        "android": "1:605771036184:android:6e44945bde06293b85756d",
+                        "web": "1:605771036184:web:1958f191d42133bc85756d"
+                    }
+                }
+            }
+        }
+    },
+    "hosting": {
+        "site": "online-tasbeeh",
+        "source": ".",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "frameworksBackend": {
+            "region": "us-west1"
+        }
+    }
 }
