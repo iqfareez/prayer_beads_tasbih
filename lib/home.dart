@@ -3,9 +3,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:prayer_beads/components/confirm_reset_dialog.dart';
+import 'package:prayer_beads/components/counter_widget.dart';
 import 'package:prayer_beads/menu.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:vibration/vibration.dart';
+
 import 'CONSTANTS.dart';
 
 class Home extends StatefulWidget {
@@ -78,7 +81,7 @@ class _HomeState extends State<Home> {
                         ),
                         IconButton(
                           tooltip: 'Change colour',
-                          icon: const Icon(Icons.palette),
+                          icon: const Icon(Icons.palette_outlined),
                           onPressed: () {
                             setState(() {
                               _imageIndex < 5 ? _imageIndex++ : _imageIndex = 1;
@@ -89,7 +92,7 @@ class _HomeState extends State<Home> {
                           tooltip: 'Reset counter',
                           icon: const Icon(Icons.refresh),
                           onPressed: () {
-                            confirmReset(context, _resetEverything);
+                            promptResetCounter(context, _resetEverything);
                           },
                         ),
                         IconButton(
@@ -113,8 +116,14 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       textDirection: TextDirection.ltr,
                       children: <Widget>[
-                        _Counter(counter: _roundCounter, counterName: 'Round'),
-                        _Counter(counter: _beadCounter, counterName: 'Beads'),
+                        CounterWidget(
+                          counter: _roundCounter,
+                          counterName: 'Round',
+                        ),
+                        CounterWidget(
+                          counter: _beadCounter,
+                          counterName: 'Beads',
+                        ),
                       ],
                     ),
                     Padding(
@@ -224,9 +233,18 @@ class _HomeState extends State<Home> {
   }
 
   void _resetEverything() {
+    // clear all data
     GetStorage().write(kBeadsCount, 0);
     GetStorage().write(kRoundCount, 0);
+
+    // reflect changes to UI
     _loadData();
+
+    showSnackBar(
+      context: context,
+      label: 'Cleared',
+      icon: CupertinoIcons.check_mark_circled,
+    );
   }
 
   void _clicked() {
@@ -252,62 +270,22 @@ class _HomeState extends State<Home> {
   }
 }
 
-class _Counter extends StatelessWidget {
-  const _Counter({required this.counter, required this.counterName});
-
-  final int counter;
-  final String counterName;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        AnimatedFlipCounter(
-          duration: const Duration(milliseconds: 300),
-          value: counter,
-          textStyle: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-        ),
-        Text(
-          counterName,
-          style: TextStyle(
-            fontSize: 20,
-            fontStyle: FontStyle.italic,
-            fontWeight: FontWeight.w300,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-void confirmReset(BuildContext context, VoidCallback callback) {
-  showDialog(
+/// Requests user confirmation to reset the counter
+Future<void> promptResetCounter(
+  BuildContext context,
+  VoidCallback onReset,
+) async {
+  final res = await showDialog(
     context: context,
     builder: (_) {
-      return AlertDialog(
-        title: Text("Reset Counter?"),
-        content: Text("This action can't be undone"),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              callback();
-              showSnackBar(
-                context: context,
-                label: 'Cleared',
-                icon: CupertinoIcons.check_mark_circled,
-              );
-              Navigator.of(context).pop();
-            },
-            child: Text('Confirm', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      );
+      return ConfirmResetDialog();
     },
   );
+
+  if (res == null) return;
+  if (res) {
+    onReset.call();
+  }
 }
 
 void showSnackBar({

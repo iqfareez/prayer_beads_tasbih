@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// Drawer items
 class Menu extends StatelessWidget {
   const Menu({super.key});
 
@@ -31,7 +32,7 @@ class Menu extends StatelessWidget {
         const Divider(),
         !kIsWeb
             ? ListTile(
-              leading: const Icon(Icons.web_asset),
+              leading: const Icon(Icons.web),
               title: const Text('Try on web'),
               onTap: () {
                 _launchURL('https://online-tasbeeh.web.app/');
@@ -76,6 +77,8 @@ class Menu extends StatelessWidget {
   }
 }
 
+/// Function to launch URL
+/// [url] is the URL to be launched
 void _launchURL(String url) async {
   final uri = Uri.parse(url);
   if (await canLaunchUrl(uri)) {
