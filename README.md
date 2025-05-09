@@ -1,4 +1,6 @@
-[![style: lint](https://img.shields.io/badge/style-flutter__lints-4BC0F5.svg)](https://pub.dev/packages/flutter_lints)
+![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
+
+![logo](https://github.com/iqfareez/prayer_beads_tasbih/blob/master/web/icons/Icon-192.png)
 
 # Prayer beads Flutter (Tasbih | Zikr)
 
@@ -10,7 +12,7 @@ A clone from [**pinkeshdarji/PrayerBeads**](https://github.com/pinkeshdarji/Pray
 | ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | <img src="https://user-images.githubusercontent.com/60868965/94334737-4f988280-000a-11eb-92e8-161c9655be9b.gif" heigth="512" width="288"/> | <img src="https://user-images.githubusercontent.com/60868965/94332657-8fab3580-0009-11eb-852d-269a9838c1ba.jpg" heigth="512" width="288"/> | -->
 
-## [RELEASES](https://github.com/iqfareez/prayer_beads_tasbih/releases)
+## RELEASEShttps://github.com/iqfareez/prayer_beads_tasbih/releases
 
 1. For [Android](https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads)
 
