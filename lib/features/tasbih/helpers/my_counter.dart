@@ -35,7 +35,7 @@ class MyCounter {
   }
 
   Future<void> loadData() async {
-    final storedTotalCount = await _prefs.getInt(kBeadsCount);
+    final storedTotalCount = await _prefs.getInt(kSpBeadsCount);
     totalCount.value = storedTotalCount ?? 0;
   }
 
@@ -67,10 +67,10 @@ class MyCounter {
 
   Future<void> reset() async {
     totalCount.value = 0;
-    await _prefs.remove(kBeadsCount);
+    await _prefs.remove(kSpBeadsCount);
   }
 
   Future<void> _saveData() async {
-    await _prefs.setInt(kBeadsCount, totalCount.value);
+    await _prefs.setInt(kSpBeadsCount, totalCount.value);
   }
 }
