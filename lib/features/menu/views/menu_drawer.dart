@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:prayer_beads/features/menu/helpers/launch_url.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Drawer items
-class Menu extends StatelessWidget {
-  const Menu({super.key});
+class MenuDrawer extends StatelessWidget {
+  const MenuDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class Menu extends StatelessWidget {
           leading: const Icon(Icons.code),
           title: const Text('GitHub'),
           onTap: () {
-            _launchURL('http://github.com/iqfareez/prayer_beads_tasbih');
+            launchURL('http://github.com/iqfareez/prayer_beads_tasbih');
           },
         ),
         const Divider(),
@@ -35,14 +35,14 @@ class Menu extends StatelessWidget {
               leading: const Icon(Icons.web),
               title: const Text('Try on web'),
               onTap: () {
-                _launchURL('https://online-tasbeeh.web.app/');
+                launchURL('https://online-tasbeeh.web.app/');
               },
             )
             : ListTile(
               leading: const Icon(Icons.android),
               title: const Text('Get the app'),
               onTap: () {
-                _launchURL(
+                launchURL(
                   'https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads',
                 );
               },
@@ -66,7 +66,7 @@ class Menu extends StatelessWidget {
               leading: const Icon(Icons.rate_review),
               title: const Text('Rate this app'),
               onTap: () {
-                _launchURL(
+                launchURL(
                   'https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads',
                 );
               },
@@ -74,16 +74,5 @@ class Menu extends StatelessWidget {
             : const SizedBox.shrink(),
       ],
     );
-  }
-}
-
-/// Function to launch URL
-/// [url] is the URL to be launched
-void _launchURL(String url) async {
-  final uri = Uri.parse(url);
-  if (await canLaunchUrl(uri)) {
-    await launchUrl(uri);
-  } else {
-    throw 'Could not launch $url';
   }
 }

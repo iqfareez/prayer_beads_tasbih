@@ -3,13 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:prayer_beads/components/confirm_reset_dialog.dart';
-import 'package:prayer_beads/components/counter_widget.dart';
-import 'package:prayer_beads/menu.dart';
+import 'package:prayer_beads/features/menu/views/menu_drawer.dart';
+import 'package:prayer_beads/features/tasbih/views/components/confirm_reset_dialog.dart';
+import 'package:prayer_beads/features/tasbih/views/components/counter_widget.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:vibration/vibration.dart';
 
-import 'CONSTANTS.dart';
+import '../../../CONSTANTS.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -57,7 +57,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(child: Menu()),
+      drawer: Drawer(child: MenuDrawer()),
       body: GestureDetector(
         onTap: _clicked,
         onVerticalDragStart: (_) => _clicked(),
