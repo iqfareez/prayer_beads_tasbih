@@ -2,14 +2,12 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:prayer_beads/features/menu/views/menu_drawer.dart';
+import 'package:prayer_beads/features/tasbih/helpers/my_counter.dart';
 import 'package:prayer_beads/features/tasbih/views/components/confirm_reset_dialog.dart';
 import 'package:prayer_beads/features/tasbih/views/components/counter_widget.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:vibration/vibration.dart';
-
-import '../../../CONSTANTS.dart';
+import 'package:signals/signals_flutter.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,13 +21,8 @@ class _HomeState extends State<Home> {
     viewportFraction: 0.1,
     initialPage: 5,
   );
-  final int _numberOfCountsToCompleteRound = 33;
+  final counter = MyCounter();
   int _imageIndex = 1;
-  int _beadCounter = 0;
-  int _roundCounter = 0;
-  int _accumulatedCounter = 0;
-  bool _canVibrate = true;
-  bool _isDisposed = false;
   final List<Color> _bgColour = [
     Colors.teal.shade50,
     Colors.lime.shade50,
@@ -44,12 +37,12 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _loadSettings();
+    _loadData();
   }
 
   @override
   void dispose() {
-    _isDisposed = true;
+    _controller.dispose();
     super.dispose();
   }
 
@@ -59,8 +52,8 @@ class _HomeState extends State<Home> {
       key: _scaffoldKey,
       drawer: Drawer(child: MenuDrawer()),
       body: GestureDetector(
-        onTap: _clicked,
-        onVerticalDragStart: (_) => _clicked(),
+        onTap: _incrementTasbih,
+        onVerticalDragStart: (_) => _incrementTasbih(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -102,7 +95,7 @@ class _HomeState extends State<Home> {
                             SharePlus.instance.share(
                               ShareParams(
                                 text:
-                                    'My total tasbeeh counter is $_accumulatedCounter',
+                                    'My total tasbeeh counter is ${counter.totalCount.value}',
                                 subject: 'Total accumulated Counter',
                                 title: 'Tasbeeh Counter',
                               ),
@@ -112,39 +105,43 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                     const Spacer(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      textDirection: TextDirection.ltr,
-                      children: <Widget>[
-                        CounterWidget(
-                          counter: _roundCounter,
-                          counterName: 'Round',
-                        ),
-                        CounterWidget(
-                          counter: _beadCounter,
-                          counterName: 'Beads',
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 32),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text('Accumulated'),
-                          const SizedBox(width: 10),
-                          AnimatedFlipCounter(
-                            value: _accumulatedCounter,
-                            duration: const Duration(milliseconds: 730),
-                            textStyle: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    Watch((context) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        textDirection: TextDirection.ltr,
+                        children: <Widget>[
+                          CounterWidget(
+                            counter: counter.roundCount.value,
+                            counterName: 'Round',
+                          ),
+                          CounterWidget(
+                            counter: counter.beadCount.value,
+                            counterName: 'Beads',
                           ),
                         ],
-                      ),
-                    ),
+                      );
+                    }),
+                    Watch((context) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text('Total'),
+                            const SizedBox(width: 10),
+                            AnimatedFlipCounter(
+                              value: counter.totalCount.value,
+                              duration: const Duration(milliseconds: 730),
+                              textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                     CarouselSlider(
                       carouselController: _buttonCarouselController,
                       options: CarouselOptions(
@@ -211,56 +208,24 @@ class _HomeState extends State<Home> {
     );
   }
 
-  void _loadSettings() async {
-    bool canVibrate = await Vibration.hasVibrator();
-    if (!_isDisposed) {
-      setState(() {
-        _canVibrate = canVibrate;
-        _loadData();
-      });
-    }
+  Future<void> _loadData() async {
+    // Load data from storage using the counter's loadData method
+    await counter.loadData();
   }
 
-  void _loadData() {
-    if (!_isDisposed) {
-      setState(() {
-        _beadCounter = GetStorage().read(kBeadsCount) ?? 0;
-        _roundCounter = GetStorage().read(kRoundCount) ?? 0;
-        _accumulatedCounter =
-            _roundCounter * _numberOfCountsToCompleteRound + _beadCounter;
-      });
-    }
-  }
-
-  void _resetEverything() {
-    // clear all data
-    GetStorage().write(kBeadsCount, 0);
-    GetStorage().write(kRoundCount, 0);
-
-    // reflect changes to UI
-    _loadData();
+  void _resetEverything() async {
+    await counter.reset();
 
     showSnackBar(
       context: context,
-      label: 'Cleared',
+      label: 'Counter Reset',
       icon: CupertinoIcons.check_mark_circled,
     );
   }
 
-  void _clicked() {
-    if (!_isDisposed) {
-      setState(() {
-        _beadCounter++;
-        _accumulatedCounter++;
-        if (_beadCounter > _numberOfCountsToCompleteRound) {
-          _beadCounter = 1;
-          _roundCounter++;
-          if (_canVibrate) Vibration.vibrate(duration: 100, amplitude: 100);
-        }
-      });
-    }
-    GetStorage().write(kBeadsCount, _beadCounter);
-    GetStorage().write(kRoundCount, _roundCounter);
+  void _incrementTasbih() {
+    counter.increment();
+
     int nextPage = _controller.page!.round() + 1;
     _controller.animateToPage(
       nextPage,

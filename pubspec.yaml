@@ -16,8 +16,9 @@ dependencies:
   carousel_slider: ^5.0.0
   cupertino_icons: ^1.0.1
   firebase_core: ^3.13.0
-  get_storage: ^2.0.2
   share_plus: ^11.0.0
+  shared_preferences: ^2.5.3
+  signals: ^6.0.2
   url_launcher: ^6.0.3
   vibration: ^3.1.3
 
