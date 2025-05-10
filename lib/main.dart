@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:signals/signals_flutter.dart';
 
+import 'features/menu/helpers/theme_switcher.dart';
 import 'features/tasbih/views/home.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await loadThemeMode();
   runApp(const MyApp());
 }
 
@@ -11,10 +15,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tasbeeh',
-      themeMode: ThemeMode.system,
-      home: Home(),
+    return Watch(
+      (context) => MaterialApp(
+        title: 'Tasbeeh',
+        themeMode: themeModeSignal.value,
+        theme: ThemeData.light(),
+        darkTheme: ThemeData.dark(),
+        home: Home(),
+      ),
     );
   }
 }

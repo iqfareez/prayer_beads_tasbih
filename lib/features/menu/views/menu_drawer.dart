@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:prayer_beads/features/menu/helpers/launch_url.dart';
+import 'package:prayer_beads/features/menu/helpers/theme_switcher.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:signals/signals_flutter.dart';
 
 /// Drawer items
 class MenuDrawer extends StatelessWidget {
@@ -23,13 +25,63 @@ class MenuDrawer extends StatelessWidget {
           child: SizedBox.shrink(),
         ),
         ListTile(
+          leading: const Icon(Icons.settings_brightness_outlined),
+          title: const Text('Change theme'),
+          trailing: Watch((context) {
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                switch (themeModeSignal.value) {
+                  ThemeMode.light => 'Light',
+                  ThemeMode.dark => 'Dark',
+                  ThemeMode.system => 'System',
+                },
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+            );
+          }),
+          onTap: () async {
+            final selected = await showDialog<ThemeMode>(
+              context: context,
+              builder: (context) {
+                return SimpleDialog(
+                  title: const Text('Select Theme'),
+                  children: [
+                    SimpleDialogOption(
+                      onPressed: () => Navigator.pop(context, ThemeMode.light),
+                      child: const Text('Light'),
+                    ),
+                    SimpleDialogOption(
+                      onPressed: () => Navigator.pop(context, ThemeMode.dark),
+                      child: const Text('Dark'),
+                    ),
+                    SimpleDialogOption(
+                      onPressed: () => Navigator.pop(context, ThemeMode.system),
+                      child: const Text('System'),
+                    ),
+                  ],
+                );
+              },
+            );
+            if (selected != null) {
+              await setThemeMode(selected);
+            }
+          },
+        ),
+        const Divider(),
+        ListTile(
           leading: const Icon(Icons.code),
           title: const Text('GitHub'),
           onTap: () {
             launchURL('http://github.com/iqfareez/prayer_beads_tasbih');
           },
         ),
-        const Divider(),
         !kIsWeb
             ? ListTile(
               leading: const Icon(Icons.web),
