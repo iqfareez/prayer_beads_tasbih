@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:prayer_beads/features/menu/helpers/launch_url.dart';
 import 'package:prayer_beads/features/menu/helpers/theme_switcher.dart';
+import 'package:prayer_beads/features/tasbih/helpers/my_counter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:signals/signals_flutter.dart';
 
@@ -11,6 +12,8 @@ class MenuDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Access the MyCounter instance from ancestor (Home) via InheritedWidget or global singleton
+    final counter = _findCounterInstance(context);
     return ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -74,6 +77,60 @@ class MenuDrawer extends StatelessWidget {
             }
           },
         ),
+        ListTile(
+          leading: const Icon(Icons.settings_brightness_outlined),
+          title: const Text('Round count'),
+          trailing: Watch((context) {
+            return Container(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                counter.roundSize.value.toString(),
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+            );
+          }),
+          onTap: () async {
+            final newValue = await showDialog<int>(
+              context: context,
+              builder: (context) {
+                int tempValue = counter.roundSize.value;
+                return AlertDialog(
+                  title: const Text('Set Round Count'),
+                  content: TextField(
+                    autofocus: true,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter beads per round',
+                    ),
+                    onChanged: (val) {
+                      final parsed = int.tryParse(val);
+                      if (parsed != null && parsed > 0) tempValue = parsed;
+                    },
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, tempValue),
+                      child: const Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+            if (newValue != null && newValue > 0) {
+              await counter.setRoundSize(newValue);
+            }
+          },
+        ),
         const Divider(),
         ListTile(
           leading: const Icon(Icons.code),
@@ -127,4 +184,12 @@ class MenuDrawer extends StatelessWidget {
       ],
     );
   }
+}
+
+// Helper to get the MyCounter instance. Adjust as needed for your app structure.
+MyCounter _findCounterInstance(BuildContext context) {
+  // If using a global singleton, return it here.
+  // If using Provider or InheritedWidget, fetch from context.
+  // For now, use a static/global instance for simplicity.
+  return MyCounter.globalInstance;
 }
