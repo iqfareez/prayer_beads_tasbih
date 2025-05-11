@@ -31,6 +31,5 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/beads/
     - assets/zikr/
     - assets/

@@ -2,8 +2,10 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:prayer_beads/features/menu/helpers/theme_switcher.dart';
 import 'package:prayer_beads/features/menu/views/menu_drawer.dart';
 import 'package:prayer_beads/features/tasbih/helpers/my_counter.dart';
+import 'package:prayer_beads/features/tasbih/views/components/bead_widget.dart';
 import 'package:prayer_beads/features/tasbih/views/components/confirm_reset_dialog.dart';
 import 'package:prayer_beads/features/tasbih/views/components/counter_widget.dart';
 import 'package:share_plus/share_plus.dart';
@@ -22,13 +24,13 @@ class _HomeState extends State<Home> {
     initialPage: 5,
   );
   final counter = MyCounter();
-  int _imageIndex = 1;
-  final List<Color> _bgColour = [
-    Colors.teal.shade50,
-    Colors.lime.shade50,
-    Colors.lightBlue.shade50,
-    Colors.pink.shade50,
-    Colors.black12,
+  int _colorIndex = 1;
+  final List<Color> _beadColor = [
+    Colors.teal,
+    Colors.lime,
+    Colors.lightBlue,
+    Colors.pink,
+    Colors.black,
   ];
 
   final _buttonCarouselController = CarouselSliderController();
@@ -77,8 +79,10 @@ class _HomeState extends State<Home> {
                           icon: const Icon(Icons.palette_outlined),
                           onPressed: () {
                             setState(() {
-                              _imageIndex < 5 ? _imageIndex++ : _imageIndex = 1;
+                              _colorIndex < 5 ? _colorIndex++ : _colorIndex = 1;
                             });
+                            // themeColor.value = _beadColor[_colorIndex - 1];
+                            setThemeColor(_beadColor[_colorIndex - 1]);
                           },
                         ),
                         IconButton(
@@ -158,7 +162,10 @@ class _HomeState extends State<Home> {
                                     horizontal: 5.0,
                                   ),
                                   decoration: BoxDecoration(
-                                    color: _bgColour[_imageIndex - 1],
+                                    color:
+                                        Theme.of(
+                                          context,
+                                        ).colorScheme.primaryContainer,
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Image.asset('assets/zikr/$i.png'),
@@ -196,10 +203,12 @@ class _HomeState extends State<Home> {
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _controller,
                 scrollDirection: Axis.vertical,
-                itemBuilder: (_, __) {
-                  return Image.asset('assets/beads/bead-$_imageIndex.png');
-                },
                 itemCount: null,
+                itemBuilder: (_, __) {
+                  return Watch((context) {
+                    return BeadWidget(color: themeColor.value, size: 90);
+                  });
+                },
               ),
             ),
           ],
