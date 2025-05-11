@@ -32,5 +32,4 @@ Future<void> setThemeColor(Color color) async {
   themeColor.value = color;
   final prefs = SharedPreferencesAsync();
   await prefs.setInt(kSpThemeColor, color.toARGB32());
-  print('Saved theme color');
 }
