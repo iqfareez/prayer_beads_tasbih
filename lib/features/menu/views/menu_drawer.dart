@@ -13,7 +13,7 @@ class MenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Access the MyCounter instance from ancestor (Home) via InheritedWidget or global singleton
-    final counter = _findCounterInstance(context);
+    final counter = MyCounter.globalInstance;
     return ListView(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -184,12 +184,4 @@ class MenuDrawer extends StatelessWidget {
       ],
     );
   }
-}
-
-// Helper to get the MyCounter instance. Adjust as needed for your app structure.
-MyCounter _findCounterInstance(BuildContext context) {
-  // If using a global singleton, return it here.
-  // If using Provider or InheritedWidget, fetch from context.
-  // For now, use a static/global instance for simplicity.
-  return MyCounter.globalInstance;
 }
