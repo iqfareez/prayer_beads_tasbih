@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:prayer_beads/features/menu/helpers/launch_url.dart';
-import 'package:prayer_beads/features/menu/helpers/theme_switcher.dart';
-import 'package:prayer_beads/features/tasbih/helpers/my_counter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:signals/signals_flutter.dart';
+
+import '../../tasbih/helpers/my_counter.dart';
+import '../helpers/launch_url.dart';
+import '../helpers/theme_switcher.dart';
 
 /// Drawer items
 class MenuDrawer extends StatelessWidget {

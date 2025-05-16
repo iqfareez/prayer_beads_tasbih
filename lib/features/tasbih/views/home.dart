@@ -2,14 +2,15 @@ import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:prayer_beads/features/menu/helpers/theme_switcher.dart';
-import 'package:prayer_beads/features/menu/views/menu_drawer.dart';
-import 'package:prayer_beads/features/tasbih/helpers/my_counter.dart';
-import 'package:prayer_beads/features/tasbih/views/components/bead_widget.dart';
-import 'package:prayer_beads/features/tasbih/views/components/confirm_reset_dialog.dart';
-import 'package:prayer_beads/features/tasbih/views/components/counter_widget.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:signals/signals_flutter.dart';
+
+import '../../menu/helpers/theme_switcher.dart';
+import '../../menu/views/menu_drawer.dart';
+import '../helpers/my_counter.dart';
+import 'components/bead_widget.dart';
+import 'components/confirm_reset_dialog.dart';
+import 'components/counter_widget.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

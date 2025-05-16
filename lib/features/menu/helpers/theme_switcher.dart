@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:prayer_beads/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signals/signals.dart';
+
+import '../../../constants.dart';
 
 /// The theme mode (ie light, dark, system)
 final themeModeSignal = signal<ThemeMode>(ThemeMode.system);
