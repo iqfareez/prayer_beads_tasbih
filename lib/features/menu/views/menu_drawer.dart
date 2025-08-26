@@ -16,8 +16,6 @@ class MenuDrawer extends StatelessWidget {
     // Access the MyCounter instance from ancestor (Home) via InheritedWidget or global singleton
     final counter = MyCounter.globalInstance;
     return ListView(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
       children: [
         DrawerHeader(
           decoration: BoxDecoration(
@@ -79,7 +77,7 @@ class MenuDrawer extends StatelessWidget {
           },
         ),
         ListTile(
-          leading: const Icon(Icons.settings_brightness_outlined),
+          leading: const Icon(Icons.repeat),
           title: const Text('Round count'),
           trailing: Watch((context) {
             return Container(
