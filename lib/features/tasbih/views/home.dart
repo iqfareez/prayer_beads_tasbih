@@ -205,7 +205,7 @@ class _HomeState extends State<Home> {
                 controller: _controller,
                 scrollDirection: Axis.vertical,
                 itemCount: null,
-                itemBuilder: (_, __) {
+                itemBuilder: (_, _) {
                   return Watch((context) {
                     return BeadWidget(color: themeColor.value, size: 90);
                   });
@@ -225,6 +225,7 @@ class _HomeState extends State<Home> {
 
   void _resetEverything() async {
     await counter.reset();
+    if (!mounted) return;
 
     showSnackBar(
       context: context,
