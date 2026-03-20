@@ -6,7 +6,7 @@
 
 # Prayer beads Flutter (Tasbih | Zikr)
 
-A simple prayer beads app built with Flutter. This app is a simple counter for Tasbih or Zikr. It has a simple and clean UI.
+A simple prayer beads app built with Flutter.
 
 <!-- ## App UI
 
