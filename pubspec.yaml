@@ -3,7 +3,7 @@ description: Tasbih Zikr
 
 publish_to: "none"
 
-version: 1.2.3+7
+version: 1.2.4+8
 
 environment:
   sdk: ^3.7.2
@@ -14,8 +14,6 @@ dependencies:
 
   animated_flip_counter: ^0.3.4
   carousel_slider: ^5.0.0
-  cupertino_icons: ^1.0.1
-  firebase_core: ^4.5.0
   share_plus: ^12.0.1
   shared_preferences: ^2.5.3
   signals: ^6.0.2

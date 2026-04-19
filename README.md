@@ -8,15 +8,24 @@
 
 A simple prayer beads app built with Flutter.
 
-<!-- ## App UI
+## Getting Started
 
-| GIF                                                                                                                                        | Screenshot                                                                                                                                 |
-| ------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| <img src="https://user-images.githubusercontent.com/60868965/94334737-4f988280-000a-11eb-92e8-161c9655be9b.gif" heigth="512" width="288"/> | <img src="https://user-images.githubusercontent.com/60868965/94332657-8fab3580-0009-11eb-852d-269a9838c1ba.jpg" heigth="512" width="288"/> | -->
+For IOS, you may need minimum XCode 26. For Android, use the latest version of Android Studio.
+
+- Prepare your machine with Flutter SDK. Follow the instructions on [Flutter's official website](https://flutter.dev/docs/get-started/install).
+- Clone the repository
+- Run `flutter pub get` to install dependencies
+- Run `flutter run` to start the app
 
 ## Releases
 
-See [Releases](https://github.com/iqfareez/prayer_beads_tasbih/releases)
+Download app from Google Play Store: https://play.google.com/store/apps/details?id=com.iqfareez.prayer_beads
+
+To sideload the app (Android), see [Releases](https://github.com/iqfareez/prayer_beads_tasbih/releases)
+
+To use on the web, go to: https://online-tasbeeh.web.app/
+
+No pre-build releases for IOS, but you can build it yourself with the instructions above.
 
 ## Screenshots
 
